@@ -130,11 +130,13 @@ class ComicPageParser:
         elif (width > height) != (dstwidth > dstheight) and not self.opt.webtoon:
             if self.opt.splitter != 1:
                 if width > height:
-                    leftbox = (0, 0, int(width / 2), height)
-                    rightbox = (int(width / 2), 0, width, height)
+                    fill_width = int(dstwidth * height / dstheight)
+                    leftbox = (0, 0, fill_width, height)
+                    rightbox = (width - fill_width, 0, width, height)
                 else:
-                    leftbox = (0, 0, width, int(height / 2))
-                    rightbox = (0, int(height / 2), width, height)
+                    fill_height = int(dstheight * width / dstwidth)
+                    leftbox = (0, 0, width, fill_height)
+                    rightbox = (0, height - fill_height, width, height)
                 if self.opt.righttoleft:
                     pageone = self.image.crop(rightbox)
                     pagetwo = self.image.crop(leftbox)
